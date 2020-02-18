@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="77ea1b57-8bd4-49e6-8995-02c3785010b1" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Helper/ToString.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ORM/ORM.go" beforeDir="false" afterPath="$PROJECT_DIR$/ORM/ORM.go" afterDir="false" />
     </list>
@@ -74,5 +72,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="增加ToString辅助函数，ORM增加insert抽象" />
+    <option name="LAST_COMMIT_MESSAGE" value="增加ToString辅助函数，ORM增加insert抽象" />
   </component>
 </project>

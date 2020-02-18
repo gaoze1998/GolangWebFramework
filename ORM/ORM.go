@@ -101,7 +101,7 @@ func (orm *ORM) ResetAndSyncDB(force bool) {
 		}
 		cols[0] += " auto_increment"
 		createSql := fmt.Sprintf(createTableSQL, k, strings.Join(cols, ","))
-		fmt.Println(createSql)
+		//fmt.Println(createSql)
 		orm.db.Exec(createSql)
 	}
 	// 获取表结构信息
@@ -206,10 +206,11 @@ func (orm *ORM) Insert(model interface{}) {
 	for i := 0; i < modelInfo.NumField; i++ {
 		insertSQLValues = append(insertSQLValues, Helper.ValueToString(modelValue.Field(i)))
 	}
-	fmt.Println(insertSQLValues)
+	//fmt.Println(insertSQLValues)
 	insertSQL = fmt.Sprintf(insertSQL, modelType.Name(), strings.Join(modelInfo.FiledNames, ","),
 		strings.Join(insertSQLValues, ","))
-	fmt.Println(insertSQL)
+	//fmt.Println(insertSQL)
+	orm.db.Exec(insertSQL)
 }
 
 // Query查询抽象
