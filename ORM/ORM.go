@@ -59,21 +59,27 @@ func (orm *ORM) RegistModel(model interface{}) {
 	modelInfo := ModelInfo{}
 	modelInfo.ModelType = modelType
 	modelField := Field{}
+	flag := false
 	for i := 0; i < modelType.NumField(); i++ {
 		modelField.FiledName = modelType.Field(i).Name
+		if modelField.FiledName == "Id" {
+			flag = true
+		}
 		modelInfo.FiledNames = append(modelInfo.FiledNames, modelField.FiledName)
 		modelField.FiledType = modelType.Field(i).Type
 		modelInfo.Filed = append(modelInfo.Filed, modelField)
 		modelInfo.NumField++
 	}
-	if _, ok := orm.modelRespository[modelType.Name()]; !ok {
+	if _, ok := orm.modelRespository[modelType.Name()]; !ok && flag {
 		orm.modelRespository[strings.ToLower(modelType.Name())] = modelInfo
+	} else {
+		fmt.Println("模型已注册或没有Id属性，请检查模型定义")
 	}
 }
 
 // 数据库同步，根据force来判断是否重置数据库
 func (orm *ORM) ResetAndSyncDB(force bool) {
-	createTableSQL := "create table if not exists %s(%s)"
+	createTableSQL := "create table if not exists %s(%s,primary key(Id))"
 	dropTableSQL := "drop table if exists %s"
 	showTablesSQL := "show tables"
 	descTableSQL := "select column_name, data_type from information_schema.columns where table_name = '%s'"
@@ -91,10 +97,11 @@ func (orm *ORM) ResetAndSyncDB(force bool) {
 		}
 		var cols []string
 		for _, fi := range v.Filed {
-			cols = append(cols, fi.FiledName+" "+ Helper.GoTypeToSQLTypeString(fi.FiledType))
+			cols = append(cols, fi.FiledName+" "+Helper.GoTypeToSQLTypeString(fi.FiledType))
 		}
+		cols[0] += " auto_increment"
 		createSql := fmt.Sprintf(createTableSQL, k, strings.Join(cols, ","))
-		//fmt.Println(createSql)
+		fmt.Println(createSql)
 		orm.db.Exec(createSql)
 	}
 	// 获取表结构信息
@@ -186,7 +193,24 @@ func (orm ORM) GetModelInfo(model interface{}) (ModelInfo, error) {
 	return ModelInfo{}, errors.New("此model未经注册")
 }
 
-
+func (orm *ORM) Insert(model interface{}) {
+	modelInfo, err := orm.GetModelInfo(model)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	modelType := modelInfo.ModelType
+	modelValue := reflect.ValueOf(model)
+	insertSQL := "insert into %s(%s) values(%s)"
+	var insertSQLValues []string
+	for i := 0; i < modelInfo.NumField; i++ {
+		insertSQLValues = append(insertSQLValues, Helper.ValueToString(modelValue.Field(i)))
+	}
+	fmt.Println(insertSQLValues)
+	insertSQL = fmt.Sprintf(insertSQL, modelType.Name(), strings.Join(modelInfo.FiledNames, ","),
+		strings.Join(insertSQLValues, ","))
+	fmt.Println(insertSQL)
+}
 
 // Query查询抽象
 func (orm *ORM) Query(model interface{}) []reflect.Value {
