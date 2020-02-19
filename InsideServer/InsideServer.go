@@ -1,10 +1,9 @@
 package InsideServer
 
 import (
-	"GolangWebFrameworkTest/Router"
-	"GolangWebFramwork/BaseRouter"
-	"GolangWebFramwork/BaseSession"
 	"fmt"
+	"github.com/gaoze1998/GolangWebFramwork/BaseRouter"
+	"github.com/gaoze1998/GolangWebFramwork/BaseSession"
 	"net/http"
 )
 

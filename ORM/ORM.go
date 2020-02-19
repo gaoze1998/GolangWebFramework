@@ -1,10 +1,10 @@
 package ORM
 
 import (
-	"GolangWebFramwork/Helper"
 	"database/sql"
 	"errors"
 	"fmt"
+	"github.com/gaoze1998/GolangWebFramwork/Helper"
 	_ "github.com/go-sql-driver/mysql"
 	"reflect"
 	"strings"
