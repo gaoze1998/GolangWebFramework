@@ -223,6 +223,7 @@ func (orm *ORM) Query(model interface{}) []reflect.Value {
 	modelType := modelInfo.ModelType
 	modelValue := reflect.ValueOf(model)
 
+	// 构造条件
 	cols := modelInfo.FiledNames
 	var conditions []string
 	for i := 0; i < modelInfo.NumField; i++ {
@@ -230,6 +231,7 @@ func (orm *ORM) Query(model interface{}) []reflect.Value {
 			conditions = append(conditions, cols[i]+" = "+fmt.Sprintf("%v", modelValue.Field(i).Interface()))
 		}
 	}
+
 	var selectSQL string
 	if len(conditions) != 0 {
 		selectSQL = fmt.Sprintf("select %s from %s where %s", strings.Join(cols, ","), modelType.Name(),
@@ -262,4 +264,39 @@ func (orm *ORM) Query(model interface{}) []reflect.Value {
 		rst = append(rst, elem)
 	}
 	return rst
+}
+
+func (orm *ORM) Update(model interface{}) {
+	updateSQL := "update %s set %s where %s"
+	modelInfo, err := orm.GetModelInfo(model)
+	if err != nil {
+		fmt.Println("不存在此模型, 无法更新")
+		return
+	}
+	modelType := modelInfo.ModelType
+	modelValue := reflect.ValueOf(model)
+	queryModel := reflect.New(modelType)
+	queryModel = reflect.Indirect(queryModel)
+	queryModel.FieldByName("Id").SetInt(modelValue.FieldByName("Id").Interface().(int64))
+	rst := orm.Query(queryModel)
+	if len(rst) >= 2 {
+		fmt.Println("一次只可以更新一个模型")
+		return
+	}
+	for i := 0; i < modelInfo.NumField; i++ {
+		if modelValue.Field(i).Interface() != "" && modelValue.Field(i).Interface() != 0 {
+			if rst[0].Field(i).Kind() == reflect.Int {
+				rst[0].Field(i).SetInt(modelValue.Field(i).Int())
+			} else if rst[0].Field(i).Kind() == reflect.String {
+				rst[0].Field(i).SetString(modelValue.Field(i).String())
+			}
+		}
+	}
+	var setSets []string
+	for i := 0; i < modelInfo.NumField; i++ {
+		setSets = append(setSets, modelInfo.FiledNames[i]+"="+Helper.ValueToString(rst[0].Field(i)))
+	}
+	updateSQL = fmt.Sprintf(updateSQL, modelType.Name(), strings.Join(setSets, ","),
+		"Id="+Helper.ValueToString(rst[0].FieldByName("Id")))
+	fmt.Println(updateSQL)
 }
