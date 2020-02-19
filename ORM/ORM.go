@@ -275,28 +275,24 @@ func (orm *ORM) Update(model interface{}) {
 	}
 	modelType := modelInfo.ModelType
 	modelValue := reflect.ValueOf(model)
-	queryModel := reflect.New(modelType)
-	queryModel = reflect.Indirect(queryModel)
-	queryModel.FieldByName("Id").SetInt(modelValue.FieldByName("Id").Interface().(int64))
-	rst := orm.Query(queryModel)
-	if len(rst) >= 2 {
-		fmt.Println("一次只可以更新一个模型")
-		return
-	}
+	rst := reflect.New(modelType)
+	rst = reflect.Indirect(rst)
+	rst.FieldByName("Id").SetInt(modelValue.FieldByName("Id").Int())
 	for i := 0; i < modelInfo.NumField; i++ {
 		if modelValue.Field(i).Interface() != "" && modelValue.Field(i).Interface() != 0 {
-			if rst[0].Field(i).Kind() == reflect.Int {
-				rst[0].Field(i).SetInt(modelValue.Field(i).Int())
-			} else if rst[0].Field(i).Kind() == reflect.String {
-				rst[0].Field(i).SetString(modelValue.Field(i).String())
+			if rst.Field(i).Kind() == reflect.Int {
+				rst.Field(i).SetInt(modelValue.Field(i).Int())
+			} else if rst.Field(i).Kind() == reflect.String {
+				rst.Field(i).SetString(modelValue.Field(i).String())
 			}
 		}
 	}
 	var setSets []string
 	for i := 0; i < modelInfo.NumField; i++ {
-		setSets = append(setSets, modelInfo.FiledNames[i]+"="+Helper.ValueToString(rst[0].Field(i)))
+		setSets = append(setSets, modelInfo.FiledNames[i]+"="+Helper.ValueToString(rst.Field(i)))
 	}
 	updateSQL = fmt.Sprintf(updateSQL, modelType.Name(), strings.Join(setSets, ","),
-		"Id="+Helper.ValueToString(rst[0].FieldByName("Id")))
-	fmt.Println(updateSQL)
+		"Id="+Helper.ValueToString(rst.FieldByName("Id")))
+	//fmt.Println(updateSQL)
+	orm.db.Exec(updateSQL)
 }

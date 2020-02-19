@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="77ea1b57-8bd4-49e6-8995-02c3785010b1" name="Default Changelist" comment="">
+    <list default="true" id="77ea1b57-8bd4-49e6-8995-02c3785010b1" name="Default Changelist" comment="&quot;insideServer修改&quot;">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/InsideServer/InsideServer.go" beforeDir="false" afterPath="$PROJECT_DIR$/InsideServer/InsideServer.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ORM/ORM.go" beforeDir="false" afterPath="$PROJECT_DIR$/ORM/ORM.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -87,6 +85,7 @@
     <MESSAGE value="删除ORM测试语句，更新insert" />
     <MESSAGE value="测试" />
     <MESSAGE value="nothing" />
-    <option name="LAST_COMMIT_MESSAGE" value="nothing" />
+    <MESSAGE value="&quot;insideServer修改&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;insideServer修改&quot;" />
   </component>
 </project>
