@@ -24,11 +24,11 @@ type BaseConfig struct {
 }
 
 //ConfigInit 应用程序配置
-func (bc *BaseConfig) ConfigInit() {
+func ConfigInit() BaseConfig {
+	bc := BaseConfig{}
 	bc.Addr = ":8081"
 	bc.Son = true
-	router := Router.RTableInit()
-	bc.Router = router
+	return bc
 }
 
 //InsideServer.Config 内嵌服务器配置
