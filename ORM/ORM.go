@@ -289,7 +289,9 @@ func (orm *ORM) Update(model interface{}) {
 	}
 	var setSets []string
 	for i := 0; i < modelInfo.NumField; i++ {
-		setSets = append(setSets, modelInfo.FiledNames[i]+"="+Helper.ValueToString(rst.Field(i)))
+		if rst.Field(i).Interface() != "" && rst.Field(i).Interface() != 0 {
+			setSets = append(setSets, modelInfo.FiledNames[i]+"="+Helper.ValueToString(rst.Field(i)))
+		}
 	}
 	updateSQL = fmt.Sprintf(updateSQL, modelType.Name(), strings.Join(setSets, ","),
 		"Id="+Helper.ValueToString(rst.FieldByName("Id")))
