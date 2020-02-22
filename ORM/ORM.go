@@ -266,6 +266,7 @@ func (orm *ORM) Query(model interface{}) []reflect.Value {
 	return rst
 }
 
+// Update更新抽象
 func (orm *ORM) Update(model interface{}) {
 	updateSQL := "update %s set %s where %s"
 	modelInfo, err := orm.GetModelInfo(model)
@@ -277,7 +278,6 @@ func (orm *ORM) Update(model interface{}) {
 	modelValue := reflect.ValueOf(model)
 	rst := reflect.New(modelType)
 	rst = reflect.Indirect(rst)
-	rst.FieldByName("Id").SetInt(modelValue.FieldByName("Id").Int())
 	for i := 0; i < modelInfo.NumField; i++ {
 		if modelValue.Field(i).Interface() != "" && modelValue.Field(i).Interface() != 0 {
 			if rst.Field(i).Kind() == reflect.Int {
@@ -297,4 +297,35 @@ func (orm *ORM) Update(model interface{}) {
 		"Id="+Helper.ValueToString(rst.FieldByName("Id")))
 	//fmt.Println(updateSQL)
 	orm.db.Exec(updateSQL)
+}
+
+// 删除抽象
+func (orm *ORM) Delete(model interface{}) {
+	deleteSQL := "delete from %s where %s"
+	modelInfo, err := orm.GetModelInfo(model)
+	if err != nil {
+		fmt.Println("不存在此模型, 无法删除")
+		return
+	}
+	modelType := modelInfo.ModelType
+	modelValue := reflect.ValueOf(model)
+	var setSets []string
+	for i := 0; i < modelInfo.NumField; i++ {
+		if modelValue.Field(i).Interface() != "" && modelValue.Field(i).Interface() != 0 {
+			setSets = append(setSets, modelInfo.FiledNames[i]+"="+Helper.ValueToString(modelValue.Field(i)))
+		}
+	}
+	deleteSQL = fmt.Sprintf(deleteSQL, modelType.Name(), strings.Join(setSets, " and "))
+	orm.db.Exec(deleteSQL)
+}
+
+// 原始SQL输入
+func (orm *ORM) RawSQLExec(Sql string) sql.Result {
+	result, err := orm.db.Exec(Sql)
+	if err != nil {
+		fmt.Println("执行Sql时一个错误发生了: ")
+		fmt.Printf("%s", err)
+		return nil
+	}
+	return result
 }
