@@ -1,7 +1,7 @@
 package BaseRouter
 
 import (
-	"github.com/gaoze1998/GolangWebFramwork/BaseController"
+	"github.com/gaoze1998/GolangWebFramework/BaseController"
 )
 
 //RouterTable 路由表结构

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/gaoze1998/GolangWebFramwork/Cli"
+	"github.com/gaoze1998/GolangWebFramework/Cli"
 	"os"
 )
 

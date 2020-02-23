@@ -1,4 +1,4 @@
-module github.com/gaoze1998/GolangWebFramwork
+module github.com/gaoze1998/GolangWebFramework
 
 go 1.12
 

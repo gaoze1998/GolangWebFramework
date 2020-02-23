@@ -2,8 +2,8 @@ package InsideServer
 
 import (
 	"fmt"
-	"github.com/gaoze1998/GolangWebFramwork/BaseRouter"
-	"github.com/gaoze1998/GolangWebFramwork/BaseSession"
+	"github.com/gaoze1998/GolangWebFramework/BaseRouter"
+	"github.com/gaoze1998/GolangWebFramework/BaseSession"
 	"net/http"
 )
 

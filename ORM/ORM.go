@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
-	"github.com/gaoze1998/GolangWebFramwork/Helper"
+	"github.com/gaoze1998/GolangWebFramework/Helper"
 	_ "github.com/go-sql-driver/mysql"
 	"reflect"
 	"strings"
