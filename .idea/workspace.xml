@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="77ea1b57-8bd4-49e6-8995-02c3785010b1" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Security/DES.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Security/MD5.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Security/RSA.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -99,7 +96,8 @@
     <MESSAGE value="&quot;修改项目结构&quot;" />
     <MESSAGE value="&quot;ORM添加删除抽象和原始SQL输入&quot;" />
     <MESSAGE value="&quot;添加cli模块，创建API项目&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="&quot;添加cli模块，创建API项目&quot;" />
+    <MESSAGE value="&quot;添加security加密模块&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;添加security加密模块&quot;" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
