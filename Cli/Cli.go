@@ -2,7 +2,7 @@ package Cli
 
 import (
 	"fmt"
-	"github.com/gaoze1998/GolangWebFramwork/Helper"
+	"github.com/gaoze1998/GolangWebFramework/Helper"
 	"os"
 )
 
