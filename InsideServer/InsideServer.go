@@ -4,30 +4,39 @@ import (
 	"fmt"
 	"github.com/gaoze1998/GolangWebFramework/BaseRouter"
 	"github.com/gaoze1998/GolangWebFramework/BaseSession"
+	"github.com/gaoze1998/GolangWebFramework/Distrabution"
+	"log"
+	"net"
 	"net/http"
+	"net/rpc"
 )
 
 //InsideServer 内嵌服务器结构体
 type InsideServer struct {
-	Addr       string
-	Req        *http.Request
-	RespWriter http.ResponseWriter
-	Router     *BaseRouter.Router
-	SessionOn  bool
+	Addr         string
+	Req          *http.Request
+	RespWriter   http.ResponseWriter
+	Router       *BaseRouter.Router
+	SessionOn    bool
+	RegistryOn   bool
+	RegistryAddr string
 }
 
 //InsideServerBaseConfig 内嵌服务器基础配置结构
 type BaseConfig struct {
-	Addr   string
-	Router *BaseRouter.Router
-	Son    bool
+	Addr         string
+	Router       *BaseRouter.Router
+	Son          bool
+	Registry     bool
+	RegistryAddr string
 }
 
 //ConfigInit 应用程序配置
 func ConfigInit() BaseConfig {
 	bc := BaseConfig{}
-	bc.Addr = ":8081"
+	bc.Addr = ":8080"
 	bc.Son = true
+	bc.Registry = false
 	return bc
 }
 
@@ -36,13 +45,24 @@ func (is *InsideServer) Config(config BaseConfig) {
 	is.Addr = config.Addr
 	is.Router = config.Router
 	is.SessionOn = config.Son
+	is.RegistryOn = config.Registry
 	if config.Son {
 		BaseSession.BaseMemorySession = make(map[int]*BaseSession.BaseSession)
+	}
+	if config.Registry {
+		Distrabution.ServerZoo = make(map[string][]*Distrabution.ServerInfo)
+		Distrabution.RequestPool = make(chan Distrabution.RequestAndResponse, 10)
+		is.RegistryAddr = config.RegistryAddr
 	}
 }
 
 //InsideServer.ServeHTTP 默认路由
 func (is *InsideServer) ServeHTTP(responseWriter http.ResponseWriter, r *http.Request) {
+	if is.RegistryOn {
+		requestAndResponse := Distrabution.RequestAndResponse{r, responseWriter}
+		Distrabution.RequestPool <- requestAndResponse
+		return
+	}
 	for path, controller := range is.Router.PathToController {
 		if path != r.URL.Path {
 			continue
@@ -69,8 +89,20 @@ func (is *InsideServer) ServeHTTP(responseWriter http.ResponseWriter, r *http.Re
 
 //InsideServer.Serve 开启内嵌服务器
 func (is *InsideServer) Serve() {
+	if is.RegistryOn {
+		rpc.Register(new(Distrabution.Registry))
+		rpc.HandleHTTP() // 采用http协议作为rpc载体
+		lis, err := net.Listen("tcp", is.RegistryAddr)
+		if err != nil {
+			log.Fatalln("致命错误: ", err)
+		}
+		go http.Serve(lis, nil)
+		go Distrabution.HealthCheck()
+		go Distrabution.LoadBalance()
+	}
 	err := http.ListenAndServe(is.Addr, is)
 	if err != nil {
-		fmt.Println("无法启动服务器，可能原因有：地址被占用；服务器资源分配空缺。\n解决方案：更改地址；重新分配服务器资源。")
+		fmt.Println("无法启动服务器，可能原因有：地址被占用；服务器资源分配空缺。\n" +
+			"解决方案：更改地址；重新分配服务器资源。")
 	}
 }

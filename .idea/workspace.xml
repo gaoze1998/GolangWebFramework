@@ -2,16 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="77ea1b57-8bd4-49e6-8995-02c3785010b1" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/GolangWebFramwork.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/GolangWebFramework.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BaseRouter/Router.go" beforeDir="false" afterPath="$PROJECT_DIR$/BaseRouter/Router.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cli/exampleApiProject.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cli/Cli.go" beforeDir="false" afterPath="$PROJECT_DIR$/Cli/Cli.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Helper/JsonizeWriter.go" beforeDir="false" afterPath="$PROJECT_DIR$/Helper/JsonizeWriter.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Helper/SetElemValues.go" beforeDir="false" afterPath="$PROJECT_DIR$/Helper/SetElemValues.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/InsideServer/InsideServer.go" beforeDir="false" afterPath="$PROJECT_DIR$/InsideServer/InsideServer.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ORM/ORM.go" beforeDir="false" afterPath="$PROJECT_DIR$/ORM/ORM.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/grest.go" beforeDir="false" afterPath="$PROJECT_DIR$/main/grest.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -35,6 +30,7 @@
       </GitPushTagMode>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="MIXED" />
   </component>
   <component name="ProjectId" id="1VNUZwjxpv25UjRQ3BalgB1dgjX" />
   <component name="ProjectLevelVcsManager">
@@ -104,9 +100,44 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
+  </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
+        <entry key="1">
+          <value>
+            <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="roots">
+                    <value>
+                      <list>
+                        <option value="$PROJECT_DIR$" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
         <entry key="MAIN">
           <value>
             <State>
@@ -115,6 +146,11 @@
           </value>
         </entry>
       </map>
+    </option>
+    <option name="OPEN_TABS">
+      <set>
+        <option value="1" />
+      </set>
     </option>
   </component>
   <component name="VcsManagerConfiguration">
@@ -130,7 +166,9 @@
     <MESSAGE value="&quot;ORM添加删除抽象和原始SQL输入&quot;" />
     <MESSAGE value="&quot;添加cli模块，创建API项目&quot;" />
     <MESSAGE value="&quot;添加security加密模块&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="&quot;添加security加密模块&quot;" />
+    <MESSAGE value="&quot;修改项目名称&quot;" />
+    <MESSAGE value="&quot;增加微服务分布式架构模块&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;增加微服务分布式架构模块&quot;" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
