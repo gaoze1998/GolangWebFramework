@@ -2,10 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="77ea1b57-8bd4-49e6-8995-02c3785010b1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cli/Cli.go" beforeDir="false" afterPath="$PROJECT_DIR$/Cli/Cli.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Helper/JsonizeWriter.go" beforeDir="false" afterPath="$PROJECT_DIR$/Helper/JsonizeWriter.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Helper/SetElemValues.go" beforeDir="false" afterPath="$PROJECT_DIR$/Helper/SetElemValues.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/InsideServer/InsideServer.go" beforeDir="false" afterPath="$PROJECT_DIR$/InsideServer/InsideServer.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -168,7 +164,8 @@
     <MESSAGE value="&quot;添加security加密模块&quot;" />
     <MESSAGE value="&quot;修改项目名称&quot;" />
     <MESSAGE value="&quot;增加微服务分布式架构模块&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="&quot;增加微服务分布式架构模块&quot;" />
+    <MESSAGE value="&quot;回退&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;回退&quot;" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
