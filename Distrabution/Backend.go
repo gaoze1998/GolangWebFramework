@@ -31,6 +31,7 @@ func (b *Backend) IsAlive() (alive bool) {
 	return
 }
 
+// AddBackendToRegistry调用rpc注册接口
 func AddBackendToRegistry(registryAddr string, servername string, backendUrl *url.URL) {
 	conn, err := rpc.DialHTTP("tcp", registryAddr)
 	if err != nil {
@@ -51,6 +52,7 @@ func AddBackendToRegistry(registryAddr string, servername string, backendUrl *ur
 	fmt.Printf("注册结果是 %d\n", res)
 }
 
+// RegistBackend提供注册接口
 func RegistBackend(serverAddr string, serverName string, registryAddr string) {
 	if serverAddr[0] == ':' {
 		serverAddr = "localhost" + serverAddr

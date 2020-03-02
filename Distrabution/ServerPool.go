@@ -51,11 +51,12 @@ func GetNextPeer(name string) *Backend {
 
 var SP ServerPool
 
+// ServerPoolInit初始化服务提供者集合
 func ServerPoolInit() {
 	SP.ServerNameBackendsMap = make(map[string][]*Backend)
 }
 
-// lb 对入向请求进行负载均衡
+// LB 对入向请求进行负载均衡
 func LB(w http.ResponseWriter, r *http.Request) {
 	serverName := strings.Split(r.URL.Path, "/")[1]
 	peer := GetNextPeer(serverName)
