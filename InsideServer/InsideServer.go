@@ -4,7 +4,11 @@ import (
 	"fmt"
 	"github.com/gaoze1998/GolangWebFramework/BaseRouter"
 	"github.com/gaoze1998/GolangWebFramework/BaseSession"
+	"github.com/gaoze1998/GolangWebFramework/Distrabution"
+	"log"
+	"net"
 	"net/http"
+	"net/rpc"
 )
 
 //InsideServer 内嵌服务器结构体
@@ -42,6 +46,7 @@ func (is *InsideServer) Config(config BaseConfig) {
 	is.Router = config.Router
 	is.SessionOn = config.Son
 	is.RegistryOn = config.Registry
+	is.RegistryAddr = config.RegistryAddr
 	if config.Son {
 		BaseSession.BaseMemorySession = make(map[int]*BaseSession.BaseSession)
 	}
@@ -49,6 +54,10 @@ func (is *InsideServer) Config(config BaseConfig) {
 
 //InsideServer.ServeHTTP 默认路由
 func (is *InsideServer) ServeHTTP(responseWriter http.ResponseWriter, r *http.Request) {
+	if is.RegistryOn {
+		Distrabution.LB(responseWriter, r)
+		return
+	}
 	for path, controller := range is.Router.PathToController {
 		if path != r.URL.Path {
 			continue
@@ -75,9 +84,23 @@ func (is *InsideServer) ServeHTTP(responseWriter http.ResponseWriter, r *http.Re
 
 //InsideServer.Serve 开启内嵌服务器
 func (is *InsideServer) Serve() {
-	err := http.ListenAndServe(is.Addr, is)
-	if err != nil {
-		fmt.Println("无法启动服务器，可能原因有：地址被占用；服务器资源分配空缺。\n" +
-			"解决方案：更改地址；重新分配服务器资源。")
+	if is.RegistryOn {
+		Distrabution.ServerPoolInit()
+		rpc.Register(new(Distrabution.AddServerI)) // 注册rpc服务
+		rpc.HandleHTTP()                           // 采用http协议作为rpc载体
+
+		lis, err := net.Listen("tcp", is.RegistryAddr)
+		if err != nil {
+			log.Fatalln("fatal error: ", err)
+		}
+
+		go http.Serve(lis, nil)
+		http.ListenAndServe(is.Addr, http.HandlerFunc(Distrabution.LB))
+	} else {
+		err := http.ListenAndServe(is.Addr, is)
+		if err != nil {
+			fmt.Println("无法启动服务器，可能原因有：地址被占用；服务器资源分配空缺。\n" +
+				"解决方案：更改地址；重新分配服务器资源。")
+		}
 	}
 }
