@@ -41,6 +41,16 @@ GQD6QzKY1Y8xS+FoQQIDAQAB
 -----END PUBLIC KEY-----    
 `)
 
+// SetRsaPublicKey 设置公钥
+func SetRsaPublicKey(key []byte) {
+	publicKey = key
+}
+
+// SetRsaPrivateKey 设置私钥
+func SetRsaPrivateKey(key []byte) {
+	privateKey = key
+}
+
 // RSA加密
 func RsaEncrypt(origData []byte) ([]byte, error) {
 	//解密pem格式的公钥
