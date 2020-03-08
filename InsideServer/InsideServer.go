@@ -95,6 +95,7 @@ func (is *InsideServer) Serve() {
 		}
 
 		go http.Serve(lis, nil)
+		go Distrabution.CheckBackendHealth()
 		http.ListenAndServe(is.Addr, http.HandlerFunc(Distrabution.LB))
 	} else {
 		err := http.ListenAndServe(is.Addr, is)
