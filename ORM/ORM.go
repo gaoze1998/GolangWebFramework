@@ -70,7 +70,7 @@ func (orm *ORM) RegistModel(model interface{}) {
 		modelInfo.Filed = append(modelInfo.Filed, modelField)
 		modelInfo.NumField++
 	}
-	if _, ok := orm.modelRespository[modelType.Name()]; !ok && flag {
+	if _, ok := orm.modelRespository[strings.ToLower(modelType.Name())]; !ok && flag {
 		orm.modelRespository[strings.ToLower(modelType.Name())] = modelInfo
 	} else {
 		fmt.Println("模型已注册或没有Id属性，请检查模型定义")
@@ -187,7 +187,7 @@ func (orm *ORM) ResetAndSyncDB(force bool) {
 func (orm ORM) GetModelInfo(model interface{}) (ModelInfo, error) {
 	modelType := reflect.TypeOf(model)
 	if _, ok := orm.modelRespository[strings.ToLower(modelType.Name())]; ok {
-		modelInfo := orm.modelRespository[strings.ToLower(modelType.Name())]
+		modelInfo := orm.modelRespository[modelType.Name()]
 		return modelInfo, nil
 	}
 	return ModelInfo{}, errors.New("此model未经注册")

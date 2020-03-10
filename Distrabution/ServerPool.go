@@ -53,6 +53,7 @@ func CheckBackendHealth() {
 		for _, v := range SP.ServerNameBackendsMap {
 			for _, vv := range v {
 				alive := ping(vv.URL.Host)
+				fmt.Println(alive)
 				vv.SetAlive(alive)
 			}
 		}
