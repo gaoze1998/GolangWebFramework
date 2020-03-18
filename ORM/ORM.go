@@ -187,7 +187,7 @@ func (orm *ORM) ResetAndSyncDB(force bool) {
 func (orm ORM) GetModelInfo(model interface{}) (ModelInfo, error) {
 	modelType := reflect.TypeOf(model)
 	if _, ok := orm.modelRespository[strings.ToLower(modelType.Name())]; ok {
-		modelInfo := orm.modelRespository[modelType.Name()]
+		modelInfo := orm.modelRespository[strings.ToLower(modelType.Name())]
 		return modelInfo, nil
 	}
 	return ModelInfo{}, errors.New("此model未经注册")
@@ -228,7 +228,7 @@ func (orm *ORM) Query(model interface{}) []reflect.Value {
 	var conditions []string
 	for i := 0; i < modelInfo.NumField; i++ {
 		if modelValue.Field(i).Interface() != "" && modelValue.Field(i).Interface() != 0 {
-			conditions = append(conditions, cols[i]+" = "+fmt.Sprintf("%v", modelValue.Field(i).Interface()))
+			conditions = append(conditions, cols[i]+" = "+fmt.Sprintf("'%v'", modelValue.Field(i).Interface()))
 		}
 	}
 

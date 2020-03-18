@@ -54,6 +54,16 @@ func (is *InsideServer) Config(config BaseConfig) {
 
 //InsideServer.ServeHTTP 默认路由
 func (is *InsideServer) ServeHTTP(responseWriter http.ResponseWriter, r *http.Request) {
+	orgin := r.Header.Get("Access-Control-Allow-Origin")
+	if orgin == "" {
+		orgin = r.Header.Get("Origin")
+	}
+	responseWriter.Header().Set("Access-Control-Allow-Origin", orgin)
+	responseWriter.Header().Add("Access-Control-Allow-Headers", "X-Requested-With,Content-Type,x-csrftoken") //header的类型
+	responseWriter.Header().Set("Access-Control-Max-Age", "86400")
+	responseWriter.Header().Set("Access-Control-Allow-Methods", "*")
+	responseWriter.Header().Set("Access-Control-Allow-Credentials", "true")
+	responseWriter.Header().Set("content-type", "application/json;charset=UTF-8") //返回数据格式是json
 	if is.RegistryOn {
 		Distrabution.LB(responseWriter, r)
 		return
