@@ -88,6 +88,10 @@ func (is *InsideServer) ServeHTTP(responseWriter http.ResponseWriter, r *http.Re
 			controller.SetReq(r)
 			controller.SetRespWriter(responseWriter)
 			controller.Put()
+		} else if r.Method == "PATCH" {
+			controller.SetReq(r)
+			controller.SetRespWriter(responseWriter)
+			controller.Patch()
 		}
 	}
 }

@@ -11,6 +11,7 @@ type Controller interface {
 	Post()
 	Put()
 	Delete()
+	Patch()
 	SetReq(req *http.Request)
 	SetRespWriter(respWriter http.ResponseWriter)
 }
@@ -35,6 +36,10 @@ func (bc BaseController) Put() {
 
 func (bc BaseController) Delete() {
 	fmt.Println("这是Delete接口")
+}
+
+func (bc BaseController) Patch() {
+	fmt.Println("这是Patch接口")
 }
 
 func (bc *BaseController) SetReq(req *http.Request) {

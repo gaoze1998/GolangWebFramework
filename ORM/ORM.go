@@ -204,7 +204,7 @@ func (orm *ORM) Insert(model interface{}) {
 	insertSQL := "insert into %s(%s) values(%s)"
 	var insertSQLValues []string
 	for i := 0; i < modelInfo.NumField; i++ {
-		insertSQLValues = append(insertSQLValues, Helper.ValueToString(modelValue.Field(i)))
+		insertSQLValues = append(insertSQLValues, "'"+Helper.ValueToString(modelValue.Field(i))+"'")
 	}
 	//fmt.Println(insertSQLValues)
 	insertSQL = fmt.Sprintf(insertSQL, modelType.Name(), strings.Join(modelInfo.FiledNames, ","),
@@ -290,7 +290,7 @@ func (orm *ORM) Update(model interface{}) {
 	var setSets []string
 	for i := 0; i < modelInfo.NumField; i++ {
 		if rst.Field(i).Interface() != "" && rst.Field(i).Interface() != 0 {
-			setSets = append(setSets, modelInfo.FiledNames[i]+"="+Helper.ValueToString(rst.Field(i)))
+			setSets = append(setSets, modelInfo.FiledNames[i]+"="+"'"+Helper.ValueToString(rst.Field(i))+"'")
 		}
 	}
 	updateSQL = fmt.Sprintf(updateSQL, modelType.Name(), strings.Join(setSets, ","),
@@ -312,7 +312,7 @@ func (orm *ORM) Delete(model interface{}) {
 	var setSets []string
 	for i := 0; i < modelInfo.NumField; i++ {
 		if modelValue.Field(i).Interface() != "" && modelValue.Field(i).Interface() != 0 {
-			setSets = append(setSets, modelInfo.FiledNames[i]+"="+Helper.ValueToString(modelValue.Field(i)))
+			setSets = append(setSets, modelInfo.FiledNames[i]+"="+"'"+Helper.ValueToString(modelValue.Field(i))+"'")
 		}
 	}
 	deleteSQL = fmt.Sprintf(deleteSQL, modelType.Name(), strings.Join(setSets, " and "))

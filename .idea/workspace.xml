@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="77ea1b57-8bd4-49e6-8995-02c3785010b1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BaseController/BaseController.go" beforeDir="false" afterPath="$PROJECT_DIR$/BaseController/BaseController.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/InsideServer/InsideServer.go" beforeDir="false" afterPath="$PROJECT_DIR$/InsideServer/InsideServer.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ORM/ORM.go" beforeDir="false" afterPath="$PROJECT_DIR$/ORM/ORM.go" afterDir="false" />
     </list>
@@ -173,7 +174,8 @@
     <MESSAGE value="&quot;完善负载均功能&quot;" />
     <MESSAGE value="&quot;完善负载均衡功能&quot;" />
     <MESSAGE value="&quot;修改ORM和Server Pool的bug&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="&quot;修改ORM和Server Pool的bug&quot;" />
+    <MESSAGE value="&quot;fix bug&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;fix bug&quot;" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
