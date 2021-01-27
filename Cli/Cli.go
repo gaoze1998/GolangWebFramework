@@ -30,7 +30,7 @@ func createAPIProject(name string) {
 		fmt.Printf("错误发生了: %s\n", err)
 		return
 	}
-	err = Helper.Unzip(exampleAPIProjectZipPath, currentWorkDirctory, name)
+	err = Helper.Unzip(exampleAPIProjectZipPath, filepath.Join(currentWorkDirctory, name))
 	if err != nil {
 		fmt.Printf("grest不完整，请查看文档后重新下载")
 		fmt.Printf("%s\n", err)
@@ -38,7 +38,7 @@ func createAPIProject(name string) {
 	}
 	fmt.Printf("创建了API项目: %s\n", name)
 	os.Chdir(filepath.Join(currentWorkDirctory, name))
-	cmd = exec.Command("go", "mod", "init", filepath.Join(currentWorkDirctory, name))
+	cmd = exec.Command("go", "mod", "init", name)
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println(err)
@@ -65,7 +65,7 @@ func createRegistryProject(name string) {
 		fmt.Printf("错误发生了: %s\n", err)
 		return
 	}
-	err = Helper.Unzip(exampleRegistryProjectZipPath, currentWorkDirctory, name)
+	err = Helper.Unzip(exampleRegistryProjectZipPath, filepath.Join(currentWorkDirctory, name))
 	if err != nil {
 		fmt.Printf("grest不完整，请查看文档后重新下载")
 		fmt.Printf("%s\n", err)
@@ -73,7 +73,7 @@ func createRegistryProject(name string) {
 	}
 	fmt.Printf("创建了Registry项目: %s\n", name)
 	os.Chdir(filepath.Join(currentWorkDirctory, name))
-	cmd = exec.Command("go", "mod", "init", filepath.Join(currentWorkDirctory, name))
+	cmd = exec.Command("go", "mod", "init", name)
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println(err)
