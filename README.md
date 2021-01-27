@@ -1,4 +1,6 @@
 ﻿# GolangWebFramework
+[中文介绍](https://github.com/gaoze1998/GolangWebFramework/chinese.md)
+
 GolangWebFramework is a very simple web development framework. It is fully coded with golang.
 ## Quick Start
 cmd: 
