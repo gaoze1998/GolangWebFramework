@@ -43,6 +43,11 @@ func createAPIProject(name string) {
 	if err != nil {
 		fmt.Println(err)
 	}
+	cmd = exec.Command("go", "mod", "tidy")
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println(err)
+	}
 }
 
 // createRegistryProject 创建Rgistry项目
@@ -74,6 +79,11 @@ func createRegistryProject(name string) {
 	fmt.Printf("创建了Registry项目: %s\n", name)
 	os.Chdir(filepath.Join(currentWorkDirctory, name))
 	cmd = exec.Command("go", "mod", "init", name)
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println(err)
+	}
+	cmd = exec.Command("go", "mod", "tidy")
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println(err)
