@@ -7,14 +7,14 @@ import (
 	"reflect"
 )
 
-// 将结果集rst json序列化，并响应请求
+// JsonizeWriter 将结果集rst json序列化，并响应请求
 func JsonizeWriter(respw http.ResponseWriter, rst []reflect.Value) {
 	fmt.Fprintf(respw, "[\n")
 	for i, v := range rst {
 		vv := v.Interface()
 		b, err := json.Marshal(vv)
 		if err != nil {
-			fmt.Println("Json序列化错误\n")
+			fmt.Println("Json序列化错误")
 		}
 		//fmt.Println(string(b))
 		if i != len(rst)-1 {

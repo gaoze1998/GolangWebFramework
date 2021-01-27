@@ -7,7 +7,8 @@ import (
 	"path/filepath"
 )
 
-func Unzip(zipFile string, destDir string) error {
+// Unzip 解压文件
+func Unzip(zipFile string, destDir string, name string) error {
 	zipReader, err := zip.OpenReader(zipFile)
 	if err != nil {
 		return err
@@ -15,7 +16,7 @@ func Unzip(zipFile string, destDir string) error {
 	defer zipReader.Close()
 
 	for _, f := range zipReader.File {
-		fpath := filepath.Join(destDir, f.Name)
+		fpath := filepath.Join(destDir, name)
 		if f.FileInfo().IsDir() {
 			os.MkdirAll(fpath, os.ModePerm)
 		} else {

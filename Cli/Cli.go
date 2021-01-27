@@ -5,12 +5,13 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"path/filepath"
 
 	"github.com/gaoze1998/GolangWebFramework/Helper"
 )
 
 // createApiProject 创建API项目
-func createAPIProject() {
+func createAPIProject(name string) {
 	cmd := exec.Command("go", "env", "GOPATH")
 	var out bytes.Buffer
 	cmd.Stdout = &out
@@ -29,17 +30,23 @@ func createAPIProject() {
 		fmt.Printf("错误发生了: %s\n", err)
 		return
 	}
-	err = Helper.Unzip(exampleAPIProjectZipPath, currentWorkDirctory)
+	err = Helper.Unzip(exampleAPIProjectZipPath, currentWorkDirctory, name)
 	if err != nil {
 		fmt.Printf("grest不完整，请查看文档后重新下载")
 		fmt.Printf("%s\n", err)
 		return
 	}
-	fmt.Printf("在\"%s\"创建了API项目\n", currentWorkDirctory)
+	fmt.Printf("创建了API项目: %s\n", name)
+	os.Chdir(filepath.Join(currentWorkDirctory, name))
+	cmd = exec.Command("go", "mod", "init", filepath.Join(currentWorkDirctory, name))
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println(err)
+	}
 }
 
 // createRegistryProject 创建Rgistry项目
-func createRegistryProject() {
+func createRegistryProject(name string) {
 	cmd := exec.Command("go", "env", "GOPATH")
 	var out bytes.Buffer
 	cmd.Stdout = &out
@@ -58,21 +65,27 @@ func createRegistryProject() {
 		fmt.Printf("错误发生了: %s\n", err)
 		return
 	}
-	err = Helper.Unzip(exampleRegistryProjectZipPath, currentWorkDirctory)
+	err = Helper.Unzip(exampleRegistryProjectZipPath, currentWorkDirctory, name)
 	if err != nil {
 		fmt.Printf("grest不完整，请查看文档后重新下载")
 		fmt.Printf("%s\n", err)
 		return
 	}
-	fmt.Printf("在\"%s\"创建了Registry项目\n", currentWorkDirctory)
+	fmt.Printf("创建了Registry项目: %s\n", name)
+	os.Chdir(filepath.Join(currentWorkDirctory, name))
+	cmd = exec.Command("go", "mod", "init", filepath.Join(currentWorkDirctory, name))
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println(err)
+	}
 }
 
 // Create 创建项目
 func Create(args []string) {
 	switch args[2] {
 	case "api":
-		createAPIProject()
+		createAPIProject(args[3])
 	case "registry":
-		createRegistryProject()
+		createRegistryProject(args[3])
 	}
 }
