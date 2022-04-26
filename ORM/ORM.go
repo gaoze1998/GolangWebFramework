@@ -8,10 +8,12 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"reflect"
 	"strings"
+	"sync"
 )
 
 // ORMCache保存ORM
 var ORMCache map[int]*ORM
+var CacheMutex sync.Mutex
 
 // 属性信息
 type Field struct {
@@ -36,9 +38,12 @@ type ORM struct {
 // GetOrNewORM获取ORM
 func GetOrNewORM() *ORM {
 	if len(ORMCache) == 0 {
-		ORMCache = make(map[int]*ORM)
-		ORMCache[0] = &ORM{nil, make(map[string]ModelInfo)}
-		return ORMCache[0]
+		CacheMutex.Lock()
+		if len(ORMCache) == 0 {
+			ORMCache = make(map[int]*ORM)
+			ORMCache[0] = &ORM{nil, make(map[string]ModelInfo)}
+		}
+		CacheMutex.Unlock()
 	}
 	return ORMCache[0]
 }
